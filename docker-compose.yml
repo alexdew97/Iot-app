@@ -7,6 +7,10 @@ services:
       - "8080:8080"
     environment:
       - DB_HOST=db
+      - DB_NAME=iot_devices
+      - DB_USER=iot_user
+      - DB_PASS=yourpassword
+      - DB_PORT=5432
   db:
     image: postgres:13
     environment:

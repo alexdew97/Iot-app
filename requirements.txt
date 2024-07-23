@@ -1,4 +1,5 @@
 aiohttp
 peewee
 peewee_async
+aiopg
 pytest

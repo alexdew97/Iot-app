@@ -1,7 +1,10 @@
+import pytest
+from aiohttp import web
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from app.main import app
 from app.models import ApiUser, Location, Device
 from app.database import database, objects
+import time
 
 class MyAppTestCase(AioHTTPTestCase):
     async def get_application(self):
@@ -10,8 +13,18 @@ class MyAppTestCase(AioHTTPTestCase):
         self.database.init('iot_devices_test', user='iot_user', password='yourpassword', host='localhost', port=5432)
         self.objects = objects
 
+        # Перевірка підключення до бази даних з повторною спробою
+        for _ in range(5):  # 5 спроб підключення
+            try:
+                self.database.connect()
+                break
+            except Exception as e:
+                print(f"Could not connect to database: {e}. Retrying...")
+                time.sleep(2)
+        else:
+            raise Exception("Could not connect to the database after multiple attempts")
+
         # Створення таблиць для тестів
-        self.database.connect()
         self.database.create_tables([ApiUser, Location, Device])
         self.database.close()
 
