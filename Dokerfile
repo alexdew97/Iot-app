@@ -1,0 +1,13 @@
+FROM python:3.9-slim
+
+# Встановлення залежностей
+WORKDIR /app
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+# Копіювання коду додатку
+COPY app/ app/
+COPY tests/ tests/
+
+# Запуск додатку
+CMD ["python", "app/main.py"]

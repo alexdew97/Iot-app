@@ -1,0 +1,4 @@
+aiohttp
+peewee
+peewee_async
+pytest

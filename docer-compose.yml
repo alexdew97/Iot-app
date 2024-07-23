@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: iot_devices
+      POSTGRES_USER: iot_user
+      POSTGRES_PASSWORD: yourpassword
+    ports:
+      - "5432:5432"
